@@ -24,7 +24,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming:
         # Entity와 테이블의 컬럼명 컨밴션 설정
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
