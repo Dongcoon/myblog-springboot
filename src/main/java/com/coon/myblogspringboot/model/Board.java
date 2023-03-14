@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,9 +26,13 @@ public class Board {
     private String content; //섬머노트 라이브러리<html>태그가 섞여서 디자인이 됨.
     @ColumnDefault("0")
     private int count; //조회수
-    @ManyToOne //Many=Board, User=One
+    @ManyToOne(fetch = FetchType.EAGER) //Many=Board, User=One
     @JoinColumn(name = "userId")
     private User user; //DB는 오브젝트를 저장할 수 없다. FK, 자바는 오브젝트를 저장할 수 있다.
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) //하나의 게시글에 여러개의 댓글
+    // mappedBy 연관관계의 주인이 아니다 (FK가 아님) DB에 컬럼 만들면 안됨.
+    //@JoinColumn -> 원자성 위배로 필요없음. >> Reply에 Board 존재
+    private List<Reply> reply;
     @CreationTimestamp
     private Timestamp createTime;
 }
