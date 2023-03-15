@@ -4,6 +4,7 @@ import com.coon.myblogspringboot.model.RoleType;
 import com.coon.myblogspringboot.model.User;
 import com.coon.myblogspringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,11 +20,21 @@ public class DummyControllerTest {
     @Autowired //의존성 주입(DI)
     private UserRepository userRepository;
 
+    @DeleteMapping("dummy/user/{id}")
+    public String delete(@PathVariable int id){
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+        }
+
+        return "삭제 되었습니다 id:" + id;
+    }
+
     //save함수는 id를 전달하지 않으면 insert 실행,
     //id 전달시 id에 대한 데이터가 있으면 update 실행,
     //id 전달시 id에 대한 데이터가 없으면 insert 실행.
-
-    @Transactional
+    @Transactional //함수 종료시에 자동 commit이 됨.
     @PutMapping("/dummy/user/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User requestUser){ // json -> Java Object로 변환
         System.out.println("id: " + id);
@@ -39,7 +50,7 @@ public class DummyControllerTest {
 //        userRepository.save(user);
 
         //더티 체킹
-        return null;
+        return user;
     }
 
 
@@ -64,12 +75,12 @@ public class DummyControllerTest {
 
 //        람다식
 //        User user = userRepository.findById(id).orElseThrow(()->{
-//            return new IllegalStateException("존재하지 않은 유저입니다. id:" + id);
+//            return new IllegalArgumentException("존재하지 않은 유저입니다. id:" + id);
 //        });
-        User user = userRepository.findById(id).orElseThrow(new Supplier<IllegalStateException>() {
+        User user = userRepository.findById(id).orElseThrow(new Supplier<IllegalArgumentException>() {
             @Override
-            public IllegalStateException get() {
-                return new IllegalStateException("존재하지 않은 유저입니다. id:" + id);
+            public IllegalArgumentException get() {
+                return new IllegalArgumentException("존재하지 않은 유저입니다. id:" + id);
             }
         });
         //user 객체 = 자바 오브젝트
