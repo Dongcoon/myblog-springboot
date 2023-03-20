@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 // static이하에 있는 /js/**, /css/**, /image/** 허용
 @Controller
 public class UserController {
-    @GetMapping("/joinForm")
+    @GetMapping("/auth/joinForm")
     public String joinForm(){
-        return "/auth/user/joinForm";
+        return "/user/joinForm";
     }
 
-    @GetMapping("/loginForm")
+    @GetMapping("/auth/loginForm")
     public String loginForm(){
-        return "/auth/user/loginForm";
+        return "/user/loginForm";
     }
 
 }
