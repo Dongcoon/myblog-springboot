@@ -1,18 +1,23 @@
 package com.coon.myblogspringboot.controller;
 
 import com.coon.myblogspringboot.config.auth.PrincipalDetail;
+import com.coon.myblogspringboot.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class BoardController {
 
+    @Autowired
+    private BoardService boardService;
+
     @GetMapping({"","/"})
-    public String index(){
-        // /WEB-INF/views/index.jsp
-        return "index";
+    public String index(Model model){
+        model.addAttribute("boards", boardService.글목록());
+        return "index"; //viewResolver 작동!!
     }
 
     // USER권한 필요
