@@ -6,6 +6,9 @@ let index = {
         $("#btn-delete").on("click", () => {
             this.deleteById();
         });
+        $("#btn-update").on("click", () => {
+            this.update();
+        });
     },
 
     save: function(){
@@ -29,7 +32,7 @@ let index = {
     },
 
     deleteById: function(){
-        var id = $("#id").text();
+        let id = $("#id").text();
 
         $.ajax({
             type:"DELETE",
@@ -38,6 +41,28 @@ let index = {
             contentType: "application/json; charset=utf-8"
         }).done(function (resp){
             alert("글삭제가 완료되었습니다.");
+            location.href = "/";
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+
+        }); // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청
+    },
+
+    update: function(){
+        let id = $("#id").val();
+
+        let data = {
+            title: $("#title").val(),
+            content: $("#content").val()
+        };
+        $.ajax({
+            type:"PUT",
+            url: "/api/board/"+id,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function (resp){
+            alert("글쓰기가 완료되었습니다.");
             location.href = "/";
         }).fail(function (error){
             alert(JSON.stringify(error));
