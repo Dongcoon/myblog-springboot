@@ -13,15 +13,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration //빈등록(IoC관리)
 public class SecurityConfig{
     @Bean
-    BCryptPasswordEncoder encode(){
+    public BCryptPasswordEncoder encodePWD(){
         return new BCryptPasswordEncoder();
     };
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() //csrf 토큰 비활성화 (테스트시 걸어두는 게 좋음)
                 .authorizeRequests()
-                    .antMatchers("/auth/**")
+                    .antMatchers("/","/auth/**","/js/**","/css/**","/image/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
