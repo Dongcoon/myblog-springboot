@@ -30,10 +30,13 @@
 ## 화면구성
 메인 페이지|회원가입 페이지
 ---|---
-<img src="etc/home_img.png" width="500" height="200"/>|<p align="center"><img src="etc/home_img.png" height="200" width="500"></p>
+<img src="etc/home_img.png" width="500" height="200"/>|<p align="center"><img src="etc/signup_img.png" height="200" width="500"></p>
 로그인 페이지|회원정보 페이지
 ---|---
-<img src="etc/home_img.png" width="500" height="200"/>|<img src="etc/home_img.png" width="500" height="200"/>
+<img src="etc/login_img.png" width="500" height="200"/>|<img src="etc/userdetail_img.png" width="500" height="200"/>
 글쓰기 페이지|글정보 페이지
 ---|---
-<img src="etc/home_img.png" width="500" height="200"/>|<img src="etc/home_img.png" width="500" height="200"/>
+<img src="etc/bwrite_img.png" width="500" height="200"/>|<img src="etc/bdetail_img.png" width="500" height="200"/>
+
+## 기능 상세
+* 
