@@ -1,0 +1,28 @@
+클라이언트키: e77e0d3ebe33f1e6e614b26522914129
+
+redirect : http://localhost:8001/auth/kakao/callback
+
+로그인 요청 주소: (GET)
+https://kauth.kakao.com/oauth/authorize?client_id=${e77e0d3ebe33f1e6e614b26522914129}&redirect_uri=${http://localhost:8001/auth/kakao/callback}&response_type=code
+
+응답받은 코드: http://localhost:8001/auth/kakao/callback
+?code=Kcfnbv7QbYtk70qtLdyMep2Ysi-p1zKA2BPFjtwmqqRBsBoy5yIVT49OMTjvZkQX0QdhHQo9dGkAAAGHElqPpA
+
+토큰 발급 요청 주소: (POST) - http body에 데이터를 전달 (4가지 데이터를 담아라)
+요청 주소: https://kauth.kakao.com/oauth/token
+헤더 값
+application/x-wwww-form-urlencoded;charset=utf-8 (key=value)
+바디 값
+grant_type=authorization_code
+client_id=e77e0d3ebe33f1e6e614b26522914129
+redirect_uri= http://localhost:8001/auth/kakao/callback
+code={동적임}
+
+토큰을 통한 사용자 정보 조회 (POST)
+요청 주소: https://kapi.kakao.com/v2/user/me
+헤더 값
+Authorization: Bearer ${ACCESS_TOKEN}/KakaoAK ${APP_ADMIN_KEY}
+Content-type: application/x-www-form-urlencoded;charset=utf-8
+
+
+

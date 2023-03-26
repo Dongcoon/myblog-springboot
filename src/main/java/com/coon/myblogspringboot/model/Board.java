@@ -1,5 +1,6 @@
 package com.coon.myblogspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,9 +30,11 @@ public class Board {
     @JoinColumn(name = "userId")
     private User user; //DB는 오브젝트를 저장할 수 없다. FK, 자바는 오브젝트를 저장할 수 있다.
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) //하나의 게시글에 여러개의 댓글
+    @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
     // mappedBy 연관관계의 주인이 아니다 (FK가 아님) DB에 컬럼 만들면 안됨.
     //@JoinColumn -> 원자성 위배로 필요없음. >> Reply에 Board 존재
-    private List<Reply> reply;
+    private List<Reply> replys;
     @CreationTimestamp
     private Timestamp createTime;
 }
