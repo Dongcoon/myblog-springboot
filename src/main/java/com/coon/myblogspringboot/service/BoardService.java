@@ -1,5 +1,6 @@
 package com.coon.myblogspringboot.service;
 
+import com.coon.myblogspringboot.dto.ReplySaveRequestDto;
 import com.coon.myblogspringboot.model.Board;
 import com.coon.myblogspringboot.model.Reply;
 import com.coon.myblogspringboot.model.RoleType;
@@ -24,6 +25,8 @@ public class BoardService {
 
     @Autowired
     private ReplyRepository replyRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public void 글쓰기(Board board, User user){ // title, content
@@ -64,15 +67,26 @@ public class BoardService {
     }
 
     @Transactional
-    public void 댓글쓰기(User user, int boardId, Reply requestReply){
-        Board board = boardRepository.findById(boardId)
+    public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto){
+        User user = userRepository.findById(replySaveRequestDto.getBoardId())
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다..");
+                });
+
+        Board board = boardRepository.findById(replySaveRequestDto.getUserId())
                 .orElseThrow(()->{
                     return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다..");
                 });
 
-        requestReply.setUser(user);
-        requestReply.setBoard(board);
+        Reply reply = Reply.builder()
+                        .user(user)
+                        .board(board)
+                        .content(replySaveRequestDto.getContent())
+                        .build();
 
-        replyRepository.save(requestReply);
+//        Reply reply = new Reply();
+//        reply.update(user,board,replySaveRequestDto.getContent());
+
+        replyRepository.save(reply);
     }
 }

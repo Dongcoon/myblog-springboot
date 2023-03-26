@@ -1,6 +1,7 @@
 package com.coon.myblogspringboot.controller.api;
 
 import com.coon.myblogspringboot.config.auth.PrincipalDetail;
+import com.coon.myblogspringboot.dto.ReplySaveRequestDto;
 import com.coon.myblogspringboot.dto.ResponseDto;
 import com.coon.myblogspringboot.model.Board;
 import com.coon.myblogspringboot.model.Reply;
@@ -37,8 +38,8 @@ public class BoardApiController {
     }
 
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal){
-        boardService.댓글쓰기(principal.getUser(),boardId,reply);
+    public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){
+        boardService.댓글쓰기(replySaveRequestDto);
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
