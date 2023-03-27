@@ -23,12 +23,17 @@ public class UserService {
     private AuthenticationManager authenticationManager;
 
     @Transactional
-    public void 회원가입(User user){
+    public int 회원가입(User user){
             String rawPassword = user.getPassword(); //원문
             String encPassword = encoder.encode(rawPassword);
             user.setRole(RoleType.USER);
             user.setPassword(encPassword);
+        try {
             userRepository.save(user);
+            return 1;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Transactional(readOnly = true)
