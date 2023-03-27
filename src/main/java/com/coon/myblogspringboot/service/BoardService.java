@@ -25,8 +25,6 @@ public class BoardService {
     BoardRepository boardRepository;
     @Autowired
     ReplyRepository replyRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @Transactional
     public void 글쓰기(Board board, User user){ // title, content

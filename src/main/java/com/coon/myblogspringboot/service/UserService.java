@@ -24,11 +24,11 @@ public class UserService {
 
     @Transactional
     public void 회원가입(User user){
-        String rawPassword = user.getPassword(); //원문
-        String encPassword = encoder.encode(rawPassword);
-        user.setRole(RoleType.USER);
-        user.setPassword(encPassword);
-        userRepository.save(user);
+            String rawPassword = user.getPassword(); //원문
+            String encPassword = encoder.encode(rawPassword);
+            user.setRole(RoleType.USER);
+            user.setPassword(encPassword);
+            userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
