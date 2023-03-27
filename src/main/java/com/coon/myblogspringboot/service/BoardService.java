@@ -8,6 +8,7 @@ import com.coon.myblogspringboot.model.User;
 import com.coon.myblogspringboot.repository.BoardRepository;
 import com.coon.myblogspringboot.repository.ReplyRepository;
 import com.coon.myblogspringboot.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +22,9 @@ import java.util.List;
 @Service
 public class BoardService {
     @Autowired
-    private BoardRepository boardRepository;
-
+    BoardRepository boardRepository;
     @Autowired
-    private ReplyRepository replyRepository;
+    ReplyRepository replyRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -68,25 +68,7 @@ public class BoardService {
 
     @Transactional
     public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto){
-        User user = userRepository.findById(replySaveRequestDto.getBoardId())
-                .orElseThrow(()->{
-                    return new IllegalArgumentException("댓글 쓰기 실패: 유저 id를 찾을 수 없습니다..");
-                });
 
-        Board board = boardRepository.findById(replySaveRequestDto.getUserId())
-                .orElseThrow(()->{
-                    return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다..");
-                });
-
-        Reply reply = Reply.builder()
-                        .user(user)
-                        .board(board)
-                        .content(replySaveRequestDto.getContent())
-                        .build();
-
-//        Reply reply = new Reply();
-//        reply.update(user,board,replySaveRequestDto.getContent());
-
-        replyRepository.save(reply);
+        replyRepository.mSave(replySaveRequestDto.getUserId(),replySaveRequestDto.getBoardId(),replySaveRequestDto.getContent());
     }
 }
